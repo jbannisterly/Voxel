@@ -4,5 +4,5 @@ in vec3 frag_pos;
 out vec4 FragColor;
 
 void main(){
-    FragColor = vec4(0,0,1 / (frag_pos.z + 1),1);
+    FragColor = vec4(frag_pos, 1);
 }
