@@ -55,7 +55,7 @@ void OBJ::LoadData(){
                             vertex.push_back(std::stof(data + startPos));
                             break;
                         case FACE:
-                            faceVertices.push_back(std::stoi(data + startPos));
+                            faceVertices.push_back(std::stoi(data + startPos) - 1);
                             break;
                         default:
                         break;

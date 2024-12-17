@@ -9,7 +9,7 @@ namespace IOUtil{
         char* fileData = (char*)malloc(size * sizeof(char) + 1);
         
         fseek(file, 0, SEEK_SET);
-        fread(fileData, sizeof(char), size, file);
+        size = fread(fileData, sizeof(char), size, file);
         fileData[size] = 0;
         fclose(file);
 

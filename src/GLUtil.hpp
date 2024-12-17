@@ -13,14 +13,16 @@ namespace GLUtil{
         glShaderSource(vertShader, 1, &vertexShaderSource, NULL);
         glCompileShader(vertShader);
         glGetShaderInfoLog(vertShader, 1024, NULL, debugMessage);
-        std::cout << debugMessage << '\n';
+        std::cout << "Vertex shader \n" << debugMessage << '\n';
+        free(vertexShaderSource);
 
         GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
         GLchar* fragmentShaderSource = IOUtil::ReadFile(fragmenShaderPath);
         glShaderSource(fragShader, 1, &fragmentShaderSource, NULL);
         glCompileShader(fragShader);
         glGetShaderInfoLog(fragShader, 1024, NULL, debugMessage);
-        std::cout << debugMessage << '\n';
+        std::cout << "Fragment shader \n" << debugMessage << '\n';
+        free(fragmentShaderSource);
 
         GLuint program = glCreateProgram();
         glAttachShader(program, vertShader);
