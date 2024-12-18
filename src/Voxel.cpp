@@ -4,6 +4,8 @@
 #include "GLUtil.hpp"
 #include "OBJUtil.hpp"
 
+void Movement(GLFWwindow* window, float deltaTime, float* position);
+
 int main(){
     glfwInit();
     GLFWwindow* window = glfwCreateWindow(512, 512, "Hello World", NULL, NULL);
@@ -73,6 +75,8 @@ int main(){
     GLuint program = GLUtil::CreateProgram("src\\shaders\\VertexSimple.glsl", "src\\shaders\\FragmentSimple.glsl");
     GLuint postProgram = GLUtil::CreateProgram("src\\shaders\\VertexSimple.glsl", "src\\shaders\\FragmentPost.glsl");
 
+    float* position = new float[3] {0,0,0};
+    GLint camPosUniform = glGetUniformLocation(program, "camera_pos");
 
     while(!glfwWindowShouldClose(window)){
         glBindFramebuffer(GL_FRAMEBUFFER, textureBuffer);
@@ -81,6 +85,7 @@ int main(){
         glClear(GL_COLOR_BUFFER_BIT);
         glBindVertexArray(preVAO);
         glUseProgram(program);
+        glUniform3f(camPosUniform, position[0], position[1], position[2]);
         glDrawElements(GL_TRIANGLES, nIndices, GL_UNSIGNED_INT, 0);
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -91,6 +96,22 @@ int main(){
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glfwSwapBuffers(window);
         glfwPollEvents();
+        Movement(window, 0.003, position);
     }
     return 0;
+}
+
+void Movement(GLFWwindow* window, float deltaTime, float* position){
+    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
+        position[2] += deltaTime;
+    }
+    if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
+        position[2] -= deltaTime;
+    }
+    if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS){
+        position[0] -= deltaTime;
+    }
+    if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS){
+        position[0] += deltaTime;
+    }
 }
